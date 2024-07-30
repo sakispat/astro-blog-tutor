@@ -1,0 +1,89 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Showcase from '../components/Showcase.astro';
+import Card from '../components/Card.astro';
+
+const pageTitle = 'Blog';
+const posts = await Astro.glob('./posts/*.md');
+---
+
+<Layout pageTitle={pageTitle}>
+    <Showcase heading='Blog' text='A simple blog built with Astro' />
+  
+    <section class="page-content">
+        <div class="container">
+            {posts.map(post => (
+                <Card>
+                    <h3>{ post.frontmatter.title }</h3>
+                    <div>
+                        Written by <strong>{ post.frontmatter.author } </strong> 
+                        on { new Date(post.frontmatter.date).toLocaleDateString() }
+                    </div>
+                    <p>{ post.frontmatter.excerpt }</p>
+                    <a class="btn" href={`/${post.frontmatter.slug}`}>
+                        Read More
+                    </a>
+                </Card>
+            ))}
+        </div>
+    </section>
+</Layout>
+
+<style>
+    .btn {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        background: #333;
+        color: #fff;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+    }
+
+    .showcase {
+        height: auto;
+        background-color: var(--color-secondary);
+        background-image: linear-gradient(to bottom, var(--color-primary), rgb(15 23 42 / 0));
+        padding: 30px;
+    }
+
+    .showcase-blog { min-height: 300px; }
+
+    .showcase-text {
+        max-width: 500px;
+        color: #fff;
+        text-align: center;
+        margin: 50px auto;
+    }
+
+    .showcase h1 {
+        font-size: 50px;
+        color: #fff;
+        margin-bottom: 20px;
+    }
+
+    .showcase p {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .showcase-img { text-align: center; }
+
+    .showcase-img img {
+        border-radius: 10px;
+        margin: auto;
+    }
+
+    .showcase-demo {
+        color: #fff;
+        text-align: center;
+        font-weight: 300;
+    }
+
+    .page-content { margin: 20px 0; }
+    .page-content h2, .page-content h3 { margin: 20px 0; }
+    .page-content h2 { font-size: 40px; }
+    .page-content h3 { font-size: 25px; }
+</style>

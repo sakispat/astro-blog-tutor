@@ -1,0 +1,46 @@
+---
+export interface Props {
+    activeTextColor?: string;
+    headings: string[];
+    contents: string[];
+}
+
+const { headings, contents, activeTextColor = '#A741FF' } = Astro.props as Props;
+---
+
+<div class="tabs">
+    <ul class="tabs-header">
+        {headings.map(heading => (
+            <li>{ heading }</li>
+        ))}
+    </ul>
+    <ul class="tabs-content">
+        {contents.map(content => (
+            <li class="tab">{ content }</li>
+        ))}
+    </ul>
+</div>
+
+<style>
+    .tabs { margin-top: 30px; }
+
+    .tabs-header {
+        display: flex;
+        background-color: #333;
+        color: #fff;
+        padding: 10px 20px;
+    }
+
+    .tabs-header li {
+        margin-right: 20px;
+        cursor: pointer;
+    }
+
+    .tabs-content {
+        font-size: 18px;
+        padding: 20px;
+        border: 1px solid #333;
+        font-weight: bold;
+        background-color: #f4f4f4;
+    }
+</style>
